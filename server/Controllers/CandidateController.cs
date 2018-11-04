@@ -53,7 +53,7 @@ namespace ats.Controllers
         ///     GET /api/Candidate/get/{username}
         ///
         /// </remarks>
-        /// <param name="email">Candidate username </param>
+        /// <param name="username">Candidate username </param>
         /// <returns>The Candidate requested</returns>
         /// <response code="200">Returns the Candidate requested using the its {username}</response>
         /// <response code="404">If the Candidate could not be find on Database(memory)</response>
@@ -123,7 +123,7 @@ namespace ats.Controllers
         ///     DELETE /api/Candidate/remove/{username}
         ///
         /// </remarks>
-        /// <param name="id">Candidate's id</param>
+        /// <param name="username">Candidate's username</param>
         /// <returns>The Candidate deletion status</returns>
         /// <response code="200">Returns the Candidate was successfully removed</response>
         /// <response code="404">The Candidate could not be found on Database(memory)</response>
@@ -131,7 +131,7 @@ namespace ats.Controllers
         [ProducesResponseType(404)]
 
         [HttpDelete("remove/{username}", Name = "RemoveCandidate")]
-        public ActionResult RemoveById(string username)
+        public ActionResult RemoveByUsername(string username)
         {
             var item = _context.Candidates.Find(username);
 
