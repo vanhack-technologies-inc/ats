@@ -9,6 +9,6 @@ namespace ats.Models
         {
         }
 
-        public DbSet<CandidateContext> Candidates { get; set; }
+        public DbSet<Candidate> Candidates { get; set; }
     }
 }
