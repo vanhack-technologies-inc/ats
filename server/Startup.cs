@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
+using Microsoft.EntityFrameworkCore;
+using Swashbuckle.AspNetCore.Swagger;
+using TodoApi.Models;
 
 namespace ats
 {
@@ -26,7 +22,7 @@ namespace ats
         public void ConfigureServices(IServiceCollection services)
         {
             //Creates TodoList in memory database
-            services.AddDbContext<TodoContext>(opt => opt.UseInMemoryDatabase("TodoList"));
+            services.AddDbContext<CandidateContext>(opt => opt.UseInMemoryDatabase("CandidateList"));
             //Force compatibility with Version 2.1.x
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
@@ -39,8 +35,8 @@ namespace ats
                 c.SwaggerDoc("v1", new Info
                 {
                     Version = "SNAPSHOT",
-                    Title = "Todo API",
-                    Description = "A simple example ASP.NET Core Web API to manage TodoItems",
+                    Title = "VHATS REST API",
+                    Description = "VanHack Applicant Tracking System - REST API",
                     TermsOfService = "None",
 
                 });
@@ -63,7 +59,7 @@ namespace ats
             // specifying the Swagger JSON endpoint.
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "TodoItem management API ");
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "VHATS REST API ");
                 //set root to swagger.
                 c.RoutePrefix = string.Empty;
             });
