@@ -63,13 +63,13 @@ namespace ats.Controllers
         [ProducesResponseType(200)]
         public ActionResult<Candidate> GetByUsername(string username)
         {
-            var item = _context.Candidates.Find(username);
-            if (item == null)
+            var candidate = _context.Candidates.Find(username);
+            if (candidate == null)
             {
                 return NotFound();
             }
 
-            return item;
+            return candidate;
         }
 
         #endregion
@@ -91,20 +91,20 @@ namespace ats.Controllers
         ///             }
         ///
         /// </remarks>
-        /// <param name="item"> see Candidate's model</param>
+        /// <param name="candidate"> see Candidate's model</param>
         /// <returns>Returns the save proccess status</returns>
         /// <response code="200">Returns the save proccess worked properly</response>
         [ProducesResponseType(200)]
         [HttpPost("save", Name = "SaveCandidate")]
-        public ActionResult Save(Candidate item)
+        public ActionResult Save(Candidate candidate)
         {
-            Candidate lookup=_context.Candidates.Find(item.username);
+            Candidate lookup=_context.Candidates.Find(candidate.username);
 
             if ( lookup != null)
             {
               _context.Candidates.Remove(lookup);
             }
-            _context.Candidates.Add(item);
+            _context.Candidates.Add(candidate);
             _context.SaveChanges();
 
             return Ok();
@@ -133,14 +133,14 @@ namespace ats.Controllers
         [HttpDelete("remove/{username}", Name = "RemoveCandidate")]
         public ActionResult RemoveByUsername(string username)
         {
-            var item = _context.Candidates.Find(username);
+            var candidate = _context.Candidates.Find(username);
 
-            if (item == null)
+            if (candidate == null)
             {
                 return NotFound();
             }
 
-            _context.Candidates.Remove(item);
+            _context.Candidates.Remove(candidate);
             _context.SaveChanges();
 
             return Ok();
