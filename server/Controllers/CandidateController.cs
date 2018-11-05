@@ -10,9 +10,9 @@ namespace ats.Controllers
     [ApiController]
     public class CandidateController : ControllerBase
     {
-        private readonly CandidateContext _context;
+        private readonly AtsContext _context;
 
-        public CandidateController ( CandidateContext context )
+        public CandidateController ( AtsContext context )
         {
             _context = context;
         }

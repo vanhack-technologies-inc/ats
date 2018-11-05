@@ -2,13 +2,14 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ats.Models
 {
-    public class CandidateContext : DbContext
+    public class AtsContext : DbContext
     {
-        public CandidateContext(DbContextOptions<CandidateContext> options)
+        public AtsContext(DbContextOptions<AtsContext> options)
             : base(options)
         {
         }
 
         public DbSet<Candidate> Candidates { get; set; }
+        public DbSet<Job> Jobs { get; set; }
     }
 }

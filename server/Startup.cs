@@ -22,7 +22,7 @@ namespace ats
         public void ConfigureServices(IServiceCollection services)
         {
             //Creates TodoList in memory database
-            services.AddDbContext<CandidateContext>(opt => opt.UseInMemoryDatabase("CandidateList"));
+            services.AddDbContext<AtsContext>(opt => opt.UseInMemoryDatabase("AtsList"));
             //Force compatibility with Version 2.1.x
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
