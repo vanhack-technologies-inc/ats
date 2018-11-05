@@ -11,5 +11,6 @@ namespace ats.Models
 
         public DbSet<Candidate> Candidates { get; set; }
         public DbSet<Job> Jobs { get; set; }
+        public DbSet<Application> Applications { get; set; }
     }
 }
