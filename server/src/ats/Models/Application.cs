@@ -5,10 +5,10 @@ namespace ats.Models
 {
     public class Application
     {
-        [Key]
+        [Required]
         public long jobId { get; set; }
 
-        [Key]
+        [Required]
         public string username { get; set; }
 
         [Required]
