@@ -12,7 +12,7 @@ namespace ats.Controllers
     {
         private readonly AtsContext _context;
 
-        public CandidateController ( AtsContext context )
+        public CandidateController(AtsContext context)
         {
             _context = context;
         }
@@ -98,11 +98,11 @@ namespace ats.Controllers
         [HttpPost("save", Name = "SaveCandidate")]
         public ActionResult Save(Candidate candidate)
         {
-            Candidate lookup=_context.Candidates.Find(candidate.username);
+            Candidate lookup = _context.Candidates.Find(candidate.username);
 
-            if ( lookup != null)
+            if (lookup != null)
             {
-              _context.Candidates.Remove(lookup);
+                _context.Candidates.Remove(lookup);
             }
             _context.Candidates.Add(candidate);
             _context.SaveChanges();

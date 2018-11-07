@@ -15,6 +15,6 @@ namespace ats.Models
 
         [Required]
         public string status { get; set; }
-        
+
     }
 }

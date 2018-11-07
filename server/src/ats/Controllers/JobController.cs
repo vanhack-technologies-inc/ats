@@ -12,7 +12,7 @@ namespace ats.Controllers
     {
         private readonly AtsContext _context;
 
-        public JobController( AtsContext context )
+        public JobController(AtsContext context)
         {
             _context = context;
         }
@@ -100,11 +100,11 @@ namespace ats.Controllers
         [HttpPost("save", Name = "SaveJob")]
         public ActionResult Save(Job job)
         {
-            Job lookup=_context.Jobs.Find(job.id);
+            Job lookup = _context.Jobs.Find(job.id);
 
-            if ( lookup != null)
+            if (lookup != null)
             {
-              _context.Jobs.Remove(lookup);
+                _context.Jobs.Remove(lookup);
             }
             _context.Jobs.Add(job);
             _context.SaveChanges();

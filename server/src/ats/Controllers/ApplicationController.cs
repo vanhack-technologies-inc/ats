@@ -12,7 +12,7 @@ namespace ats.Controllers
     {
         private readonly AtsContext _context;
 
-        public ApplicationController ( AtsContext context )
+        public ApplicationController(AtsContext context)
         {
             _context = context;
         }
@@ -65,7 +65,7 @@ namespace ats.Controllers
         [ProducesResponseType(200)]
         public ActionResult<Application> GetByUsernameAndJobId(long jobId, string username)
         {
-            var application = _context.Applications.Find( jobId, username );
+            var application = _context.Applications.Find(jobId, username);
             if (application == null)
             {
                 return NotFound();
@@ -100,9 +100,9 @@ namespace ats.Controllers
         [HttpPost("save", Name = "SaveApplication")]
         public ActionResult Save(Application application)
         {
-            Application lookup = _context.Applications.Find( application.jobId , application.username );
+            Application lookup = _context.Applications.Find(application.jobId, application.username);
 
-            if ( lookup != null )
+            if (lookup != null)
             {
                 _context.Applications.Remove(lookup);
             }
