@@ -132,7 +132,7 @@ namespace ats.Controllers
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
 
-        [HttpDelete("remove/{username}", Name = "RemoveJob")]
+        [HttpDelete("remove/{id}", Name = "RemoveJob")]
         public ActionResult RemoveByUsername(long id)
         {
             var item = _context.Jobs.Find(id);

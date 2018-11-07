@@ -79,7 +79,7 @@ function 0001_up_n_running {
 
 function 1001_candidatelist_return_any_json {
   TEST_CODE="1001"
-  TEST_DESCRIPTION="List any json list (even empty) from Candidate controller"
+  TEST_DESCRIPTION="List any json list (even empty) through Candidate's controller"
   echo "--- $TEST_CODE - $TEST_DESCRIPTION "
 
   VERB="GET"
@@ -89,6 +89,49 @@ function 1001_candidatelist_return_any_json {
   checked $TEST_CODE
 }
 
+function 1002_save_candidate_called_someone {
+  TEST_CODE="1002"
+  TEST_DESCRIPTION="Create user 'someone' through Candidate's controller"
+  echo "--- $TEST_CODE - $TEST_DESCRIPTION "
+
+  VERB="POST"
+  API="api/Candidate/save"
+  curl -X $VERB -s "$PROTOCOL://$HOST:$PORT/$API"  -H "accept: application/json" -H "Content-Type: text/json" -d "{ \"username\": \"someone\", \"email\": \"someone@email.net\", \"name\": \"Someone added as Candidate\", \"verified\": true}" 
+  
+  VERB="GET"
+  API="api/Candidate/get/someone"
+  [[ $( curl -X $VERB -s "$PROTOCOL://$HOST:$PORT/$API" | grep "someone@email.net" -c ) -gt 0 ]] || rejected $TEST_CODE 
+ 
+  checked $TEST_CODE
+}
+
+function 1003_candidatelist_look_for_someone {
+  TEST_CODE="1003"
+  TEST_DESCRIPTION="List any json list (even empty) through Candidate's controller"
+  echo "--- $TEST_CODE - $TEST_DESCRIPTION "
+
+  VERB="GET"
+  API="api/Candidate/get/someone"
+  [[ $( curl -X $VERB -s "$PROTOCOL://$HOST:$PORT/$API" | grep "someone@email.net" -c ) -gt 0 ]] || rejected $TEST_CODE 
+  
+  checked $TEST_CODE
+}
+
+function 1004_candidatedelete_delete_someone {
+  TEST_CODE="1004"
+  TEST_DESCRIPTION="Delete someone through Candidate's controller"
+  echo "--- $TEST_CODE - $TEST_DESCRIPTION "
+
+  VERB="DELETE"
+  API="api/Candidate/remove/someone"
+  curl -X $VERB -s "$PROTOCOL://$HOST:$PORT/$API"
+  
+  VERB="GET"
+  API="api/Candidate/get/someone"
+  [[ $( curl -X $VERB -s "$PROTOCOL://$HOST:$PORT/$API" | grep "someone@email.net" -c ) -ne 0 ]] && rejected $TEST_CODE 
+  
+  checked $TEST_CODE
+}
 
 ###########
 ### Job tests - starts with 2????
@@ -96,7 +139,7 @@ function 1001_candidatelist_return_any_json {
 
 function 2001_joblist_return_any_json {
   TEST_CODE="2001"
-  TEST_DESCRIPTION="List any json list (even empty) from Job controller"
+  TEST_DESCRIPTION="List any json list (even empty) through Job's controller"
   echo "--- $TEST_CODE - $TEST_DESCRIPTION "
 
   VERB="GET"
@@ -106,13 +149,59 @@ function 2001_joblist_return_any_json {
   checked $TEST_CODE
 }
 
+function 2002_save_job_someposition {
+  TEST_CODE="2002"
+  TEST_DESCRIPTION="Create job 'someposition' through Job's controller"
+  echo "--- $TEST_CODE - $TEST_DESCRIPTION "
+
+  VERB="POST"
+  API="api/Job/save"
+  curl -X $VERB -s "$PROTOCOL://$HOST:$PORT/$API" -H "accept: application/json" -H "Content-Type: application/json" -d "{ \"id\": 333, \"name\": \"someposition\", \"description\": \"A generic Position for test propose\", \"company\": \"Arcadia\", \"recruiter\": \"VeryGoodOne\", \"open\": true}"
+  
+  VERB="GET"
+  API="api/Job/get/333"
+  [[ $( curl -X $VERB -s "$PROTOCOL://$HOST:$PORT/$API" | grep "someposition" -c ) -eq 0 ]] && rejected $TEST_CODE 
+ 
+  checked $TEST_CODE
+}
+
+
+function 2003_joblist_look_for_someposition {
+  TEST_CODE="2003"
+  TEST_DESCRIPTION="Create job 'someposition' through Job's controller"
+  echo "--- $TEST_CODE - $TEST_DESCRIPTION "
+
+  VERB="GET"
+  API="api/Job/get/333"
+  [[ $( curl -X $VERB -s "$PROTOCOL://$HOST:$PORT/$API" | grep "someposition" -c ) -eq 0 ]] && rejected $TEST_CODE 
+ 
+  checked $TEST_CODE
+}
+
+function 2004_jobdelete_delete_someone {
+  TEST_CODE="2004"
+  TEST_DESCRIPTION="Delete someposition through Job's controller"
+  echo "--- $TEST_CODE - $TEST_DESCRIPTION "
+
+  VERB="DELETE"
+  API="api/Job/remove/333"
+  curl -X $VERB -s "$PROTOCOL://$HOST:$PORT/$API"
+  
+  VERB="GET"
+  API="api/Job/get/333"
+  [[ $( curl -X $VERB -s "$PROTOCOL://$HOST:$PORT/$API" | grep "someposition" -c ) -eq 0 ]] || rejected $TEST_CODE 
+  
+  checked $TEST_CODE
+}
+
+
 ###########
 ### Application tests - starts with 3????
 ###########
 
 function 3001_applicationlist_return_any_json {
   TEST_CODE="3001"
-  TEST_DESCRIPTION="List any json list (even empty) from Application controller"
+  TEST_DESCRIPTION="List any json list (even empty) through Application's controller"
   echo "--- $TEST_CODE - $TEST_DESCRIPTION "
 
   VERB="GET"
@@ -134,10 +223,23 @@ function 3001_applicationlist_return_any_json {
 0001_up_n_running
 
 1001_candidatelist_return_any_json
+1002_save_candidate_called_someone
+1003_candidatelist_look_for_someone
+1001_candidatelist_return_any_json
 
 2001_joblist_return_any_json
+2002_save_job_someposition
+2003_joblist_look_for_someposition
 
 3001_applicationlist_return_any_json
+
+
+###########
+### Tear Down
+###########
+
+1004_candidatedelete_delete_someone
+2004_jobdelete_delete_someone
 
 ###########
 ### Print test resume  
