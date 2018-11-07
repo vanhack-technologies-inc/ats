@@ -17,23 +17,24 @@ TESTS_REPROVED_LIST=
 
 function rejected () {
   TESTS_REPROVED_LIST="$TESTS_REPROVED_LIST:$1"
-  TESTS_REPROVED_SUM=$(echo $TESTS_REPROVED_LIST | grep ":" -c )
+  TESTS_REPROVED_SUM=$(( $(echo $TESTS_REPROVED_LIST | tr ':' '\n' | wc -l ) -1 ))
   echo "NOK. TEST $1 rejected.  Exiting..." && echo_resume && exit 1
 }
 
 function rejected_bypassed () {
   TESTS_REPROVED_LIST="$TESTS_REPROVED_LIST:$1"
-  TESTS_REPROVED_SUM=$(echo $TESTS_REPROVED_LIST | grep ":" -c )
+  TESTS_REPROVED_SUM=$(( $(echo $TESTS_REPROVED_LIST | tr ':' '\n' | wc -l ) -1 ))
   echo "NOT PASSED:  $1 - This error was bypassed to move to next test"
 }
 
 function checked () {
   TESTS_PASSED_LIST="$TESTS_PASSED_LIST:$1"
-  TESTS_PASSED_SUM=$(echo $TESTS_PASSED_LIST | grep ":" -c )
+  TESTS_PASSED_SUM=$(( $(echo $TESTS_PASSED_LIST | tr ':' '\n' | wc -l ) -1 ))
   echo "--- $1 Checked"
 }
 
 function echo_resume {
+
   echo "########### Test Resume"
   echo "### Tests approved: $TESTS_PASSED_SUM"
   echo "### Tests reproved: $TESTS_REPROVED_SUM"
@@ -105,6 +106,22 @@ function 2001_joblist_return_any_json {
   checked $TEST_CODE
 }
 
+###########
+### Application tests - starts with 3????
+###########
+
+function 3001_applicationlist_return_any_json {
+  TEST_CODE="3001"
+  TEST_DESCRIPTION="List any json list (even empty) from Application controller"
+  echo "--- $TEST_CODE - $TEST_DESCRIPTION "
+
+  VERB="GET"
+  API="api/Job/list"
+  [[ $( curl -X $VERB -s "$PROTOCOL://$HOST:$PORT/$API" | grep "^\[.*]$" -c ) -gt 0 ]] || rejected $TEST_CODE 
+  
+  checked $TEST_CODE
+}
+
 
 ###########
 ###########
@@ -120,6 +137,7 @@ function 2001_joblist_return_any_json {
 
 2001_joblist_return_any_json
 
+3001_applicationlist_return_any_json
 
 ###########
 ### Print test resume  
