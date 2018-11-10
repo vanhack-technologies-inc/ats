@@ -8,16 +8,16 @@ See [this article](https://en.wikipedia.org/wiki/Applicant_tracking_system) to f
 
 ## Technologies
 
-In common agreement, this project will be developed based on stack used by Vanhack's team and the technologies choosed would be supported by its stack.
+In common agreement, the technology stack for developing this project prioritizes the technology stack in use by the VanHack team. All technologies chosen would be supported by its stack.
 
 ### Backend Technologies
 
-The solution will be divided in different sides, the backend providing REST API and the front Due the VanHack's partnership with Microsoft and because their systems are made in .NET, the backend part will be developed .NET Core MVC.
+The solution will be divided into different parts; the fontend and the backend providing REST API. Considering VanHack's partnership with Microsoft and that .NET Core is a general purpose, modular, cross-platform and open source implementation of the .NET Standard, the backend part will be developed using *.NET Core MVC*.
 
 For more details, see [Define back-end technology #1](https://github.com/vanhack-technologies-inc/ats/issues/1)
 
 ### Frontend Technologies
 
-The solution will be divided in different sides, the frontend will connect the final user with the proper APIs through its UI. Basically, the ReactJS was choosed considering it is a very used framework and it is also used by Vanhack's team.
+The frontend portion will connect the final user with the proper APIs through its Web UI. Basically, *ReactJS* was chosen considering its vast popularity as a robust frontend framework also used by the VanHack team.
 
 For more details, see [Define front-end technology #2](https://github.com/vanhack-technologies-inc/ats/issues/2)
